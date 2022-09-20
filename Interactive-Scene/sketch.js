@@ -1,6 +1,6 @@
 // Interactive-Scene
 // Will
-// September 20, 2022
+// September 20,
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
