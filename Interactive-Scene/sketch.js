@@ -5,10 +5,10 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let charX = 30;
-let charY = 30;
-let startX = windowWidth / 2;
-let startY = windowHeight - windowHeight;
+let characterWidth = width / 10;
+let characterHeight = height / 10;
+let startX = width / 2;
+let startY = height - characterHeight;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -20,5 +20,6 @@ function draw() {
 }
 
 function character() {
-  rect(startX, startY, charX, charY);
+  rect(startX, startY, characterWidth, characterHeight);
+  fill("black");            
 }
