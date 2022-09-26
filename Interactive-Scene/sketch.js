@@ -5,14 +5,10 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let characterWidth = width / 10;
-let characterHeight = height / 10;
-let startX = width / 2;
-let startY = height - characterHeight;
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
+
 
 function draw() {
   background(220);
@@ -20,6 +16,10 @@ function draw() {
 }
 
 function character() {
+  let startX = width / 2;
+  let startY = height - characterHeight;
+  let characterWidth = width / 10;
+  let characterHeight = height / 10;
   rect(startX, startY, characterWidth, characterHeight);
   fill("black");            
 }
