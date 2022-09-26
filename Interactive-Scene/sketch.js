@@ -13,7 +13,7 @@ function setup() {
   rectHeight = 150;
   rectWidth = 150;
   pressLength = 0;
-  x = width / 2;
+  x = width / 2 - rectWidth / 2;
   y = height - rectHeight;
   r = 0;
   g = 0;
@@ -27,8 +27,10 @@ function draw() {
 }
 
 function drawRectangle() {
-  fill(r, g, b)
-  rect(x, y, rectWidth, rectHeight)
+  if (y <= height) {
+    fill(r, g, b)
+    rect(x, y, rectWidth, rectHeight)
+  }
 }
 
 function rectJump() {
@@ -39,16 +41,19 @@ function rectJump() {
       r += 3;
       g += 5;
       b += 7;
-      if (pressLength <= height/2) {
-        pressLength += 1;
+      if (pressLength <= height / 2) {
+        pressLength += 10;
       }
+    }
+    else {
+      pressLength = height / 2;
     }
   }
 }
 
 function keyReleased() {
+  y -= pressLength
   rectHeight = 150;
-  y = pressLength;
 }
 
 
