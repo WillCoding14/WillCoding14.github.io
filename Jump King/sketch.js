@@ -6,11 +6,16 @@
 // - describe what you did to take this project "above and beyond"
 
 
+let x = 50;
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(400, 400);
 }
 
 function draw() {
-  background(220);
+  background("black");
+  fill("white");
+  rect(x, 50, 25, 25);
+  x++;
 }
 
