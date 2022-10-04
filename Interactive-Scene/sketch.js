@@ -24,19 +24,19 @@ function draw() {
 }
 
 function mousePressed() {
-  if (state === "start" && mouseInBox(400, 700, 400, 550)) {
+  if (state === "start" && mouseInBox(width / 2 - 150, width / 2 + 150, height / 2 - 75, height / 2 + 75)) {
     state = "main";
   }
 }
 
 function startScreen() {
-  if (mouseInBox(400, 700, 400, 550)) {
+  if (mouseInBox(width / 2 - 150, width / 2 + 150, height / 2 - 75, height / 2 + 75)) {
     fill("grey");
   }
   else {
     fill("black");
   }
-  rect(width/2 - 150, height / 2, 300, 150);
+  rect(width / 2 - 150, height / 2 - 75, 300, 150);
 }
 
 function mouseInBox(left, right, top, bottom) {
