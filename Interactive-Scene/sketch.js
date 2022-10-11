@@ -7,10 +7,15 @@
 
 
 let state = "start";
-let backdrop;
+let mainBg, startBg;
+let bX, bY, bW, bH;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  bX = width / 2 - 150;
+  bY = height / 2 - 75;
+  bW = 300;
+  bH = 150;
 }
 
 function draw() {
@@ -19,24 +24,24 @@ function draw() {
     startScreen();
   }
   if (state === "main") {
-    image(backdrop, 0, 0, width, height);
+    image(mainBg, 0, 0, width, height);
   }
 }
 
 function mousePressed() {
-  if (state === "start" && mouseInBox(width / 2 - 150, width / 2 + 150, height / 2 - 75, height / 2 + 75)) {
+  if (state === "start" && mouseInBox(bX, bX + 300, bY, bY + 150)) {
     state = "main";
   }
 }
 
 function startScreen() {
-  if (mouseInBox(width / 2 - 150, width / 2 + 150, height / 2 - 75, height / 2 + 75)) {
+  if (mouseInBox(bX, bX + 300, bY, bY + 150)) {
     fill("grey");
   }
   else {
     fill("black");
   }
-  rect(width / 2 - 150, height / 2 - 75, 300, 150);
+  rect(bX, bY, bW, bH);
 }
 
 function mouseInBox(left, right, top, bottom) {
@@ -45,5 +50,5 @@ function mouseInBox(left, right, top, bottom) {
 }
 
 function preload() {
-  backdrop = loadImage("background.png");
+  mainBg = loadImage("background.png");
 }
