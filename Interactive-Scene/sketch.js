@@ -80,7 +80,7 @@ function drawDummies(){
   image(targetDummy, width / 2 + tLength, height - tLength, tLength, tLength);
 }
 
-
+//just a test
 function shootGun(){
   state = "main";
 }
