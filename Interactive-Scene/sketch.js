@@ -3,14 +3,14 @@
 // September 20, 2022
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Added in some sound, 
 
 
 let state = "start";
 let mainBg, startBg, targetDummy, uzi1, uzi2, uzi3;
 let bX, bY, bW, bH;
 let tLength, uLength;
-let frameLength;
+let s;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -19,7 +19,6 @@ function setup() {
   bW = 300;
   bH = 150;
   tLength = 300, uLength = 350;
-  frameLength = 100;
 }
 
 function draw() {
@@ -33,6 +32,8 @@ function draw() {
     drawGunMain();
   }
   if (state === "shoot") {
+    image(mainBg, 0, 0, width, height);
+    drawDummies();
     shootGun();
   }
 }
@@ -41,8 +42,8 @@ function mousePressed() {
   if (state === "start" && mouseInBox(bX, bX + 300, bY, bY + 150)) {
     state = "main";
   }
-  else if (state === "main") {
-    state === "shoot";
+  else if (state === "main"){
+    state = "shoot";
   }
 }
 
@@ -74,13 +75,24 @@ function drawGunMain(){
 }
 
 function drawDummies(){
-  image(targetDummy, width / 2, height - tLength, tLength, tLength);
+  image(targetDummy, width / 2, height - tLength - 100, tLength, tLength);
   image(targetDummy, width / 2 - tLength, height - tLength, tLength, tLength);
-  image(targetDummy, width / 2 - tLength * 2, height - tLength, tLength, tLength);
+  image(targetDummy, width / 2 - tLength * 2, height - tLength - 50, tLength, tLength);
   image(targetDummy, width / 2 + tLength, height - tLength, tLength, tLength);
 }
 
-//just a test
 function shootGun(){
+  animateGun();
   state = "main";
+}
+
+function animateGun(){
+  image(uzi2, mouseX, height - uLength + 50, uLength, uLength);
+  image(uzi3, mouseX, height - uLength + 50, uLength, uLength);
+  
+}
+
+function resetBg(){
+  image(mainBg, 0, 0, width, height);
+  drawDummies;
 }
