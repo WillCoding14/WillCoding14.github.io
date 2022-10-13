@@ -3,7 +3,7 @@
 // September 20, 2022
 //
 // Extra for Experts:
-// Added in some sound, 
+// Added in some sound for shooting and hit effects 
 
 
 let state = "start";
@@ -11,6 +11,8 @@ let mainBg, startBg, targetDummy, uzi1, uzi2, uzi3;
 let bX, bY, bW, bH;
 let tLength, uLength;
 let s;
+let img;
+let frameWait, lastTimeSwitched;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -19,6 +21,9 @@ function setup() {
   bW = 300;
   bH = 150;
   tLength = 300, uLength = 350;
+  img = "one";
+  frameWait = 5000;
+  lastTimeSwitched = 0;
 }
 
 function draw() {
@@ -32,9 +37,12 @@ function draw() {
     drawGunMain();
   }
   if (state === "shoot") {
-    image(mainBg, 0, 0, width, height);
-    drawDummies();
-    shootGun();
+    while (mouseIsPressed){
+      image(mainBg, 0, 0, width, height);
+      drawDummies();
+      shootGun();
+    }
+    state === "main";
   }
 }
 
@@ -82,13 +90,36 @@ function drawDummies(){
 }
 
 function shootGun(){
+  animateCalc();
   animateGun();
-  state = "main";
 }
 
 function animateGun(){
-  image(uzi2, mouseX, height - uLength + 50, uLength, uLength);
-  image(uzi3, mouseX, height - uLength + 50, uLength, uLength);
+  if (img === "one"){
+    image(uzi1, mouseX, height - uLength + 50, uLength, uLength);
+  }
+  else if (img === "two"){
+    image(uzi2, mouseX, height - uLength + 50, uLength, uLength);
+  }
+  else if (img === "three"){
+    image(uzi3, mouseX, height - uLength + 50, uLength, uLength);
+  }
+  
+}
+
+function animateCalc(){
+  if (img === "one" && millis() < frameWait + lastTimeSwitched){
+    img = "two";
+    lastTimeSwitched = millis();
+  }
+  else if (img === "two" && millis() < frameWait + lastTimeSwitched){
+    img = "three";
+    lastTimeSwitched = millis(); 
+  }
+  else if (img === "three" && millis() < frameWait + lastTimeSwitched){
+    img = "one";
+    lastTimeSwitched = millis();
+  }
   
 }
 
