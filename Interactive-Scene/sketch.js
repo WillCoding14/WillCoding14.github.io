@@ -37,12 +37,12 @@ function draw() {
     drawGunMain();
   }
   if (state === "shoot") {
-    while (mouseIsPressed){
+    if (mouseIsPressed){
       image(mainBg, 0, 0, width, height);
       drawDummies();
       shootGun();
     }
-    state === "main";
+    state = "main";
   }
 }
 
