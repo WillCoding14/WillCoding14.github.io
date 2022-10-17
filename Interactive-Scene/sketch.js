@@ -3,16 +3,17 @@
 // September 20, 2022
 //
 // Extra for Experts:
-// Added in some sound for shooting and hit effects 
+// Did not do any extra for experts this time.
 
 
 let state = "start";
-let mainBg, startBg, targetDummy, uzi1, uzi2, uzi3;
+let mainBg, startBg, targetDummy, uzi1, uzi2, uzi3, hitmarker;
 let bX, bY, bW, bH;
 let tLength, uLength;
 let s;
 let img;
 let frameWait, lastTimeSwitched;
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -31,13 +32,13 @@ function draw() {
   if (state === "start") {
     startScreen();
   }
-  if (state === "main"){
+  if (state === "main") {
     image(mainBg, 0, 0, width, height);
     drawDummies();
     drawGunMain();
   }
   if (state === "shoot") {
-    if (mouseIsPressed){
+    if (mouseIsPressed) {
       image(mainBg, 0, 0, width, height);
       drawDummies();
       shootGun();
@@ -50,14 +51,15 @@ function mousePressed() {
   if (state === "start" && mouseInBox(bX, bX + 300, bY, bY + 150)) {
     state = "main";
   }
-  else if (state === "main"){
+  else if (state === "main") {
     state = "shoot";
   }
 }
 
 function startScreen() {
+  image(startBg, 0, 0, width, height);
   if (mouseInBox(bX, bX + 300, bY, bY + 150)) {
-    fill("grey");
+    fill("red");
   }
   else {
     fill("black");
@@ -76,54 +78,30 @@ function preload() {
   uzi1 = loadImage("tile000.png");
   uzi2 = loadImage("tile001.png");
   uzi3 = loadImage("tile002.png");
+  startBg = loadImage("backgroundstart.png");
+  hitmarker = loadImage("hitmarker.png");
 }
 
-function drawGunMain(){
+function drawGunMain() {
   image(uzi1, mouseX, height - uLength + 50, uLength, uLength);
 }
 
-function drawDummies(){
+function drawDummies() {
   image(targetDummy, width / 2, height - tLength - 100, tLength, tLength);
   image(targetDummy, width / 2 - tLength, height - tLength, tLength, tLength);
   image(targetDummy, width / 2 - tLength * 2, height - tLength - 50, tLength, tLength);
   image(targetDummy, width / 2 + tLength, height - tLength, tLength, tLength);
 }
 
-function shootGun(){
-  animateCalc();
-  animateGun();
+function shootGun() {
+  image(uzi1, mouseX, height - uLength + 50, uLength, uLength);
+  image(uzi2, mouseX, height - uLength + 50, uLength, uLength);
+  image(uzi3, mouseX, height - uLength + 50, uLength, uLength);
+  image(hitmarker, mouseX - 25, mouseY -25, 50, 50);
 }
 
-function animateGun(){
-  if (img === "one"){
-    image(uzi1, mouseX, height - uLength + 50, uLength, uLength);
-  }
-  else if (img === "two"){
-    image(uzi2, mouseX, height - uLength + 50, uLength, uLength);
-  }
-  else if (img === "three"){
-    image(uzi3, mouseX, height - uLength + 50, uLength, uLength);
-  }
-  
-}
 
-function animateCalc(){
-  if (img === "one" && millis() < frameWait + lastTimeSwitched){
-    img = "two";
-    lastTimeSwitched = millis();
-  }
-  else if (img === "two" && millis() < frameWait + lastTimeSwitched){
-    img = "three";
-    lastTimeSwitched = millis(); 
-  }
-  else if (img === "three" && millis() < frameWait + lastTimeSwitched){
-    img = "one";
-    lastTimeSwitched = millis();
-  }
-  
-}
-
-function resetBg(){
+function resetBg() {
   image(mainBg, 0, 0, width, height);
   drawDummies;
 }
