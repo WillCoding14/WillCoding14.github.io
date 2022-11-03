@@ -8,11 +8,15 @@
 
 const ROWS = 40;
 const COLS = 40;
-let grid;
-let cellWidth;
-let cellHeight;
+let grid, cellWidth, cellHeight;
 let playerX = ROWS/2;
 let playerY = COLS/2;
+let imageSpike, imageBrick;
+
+function preload(){
+  imageSpike = loadImage("imageSpike.png");
+  imageBrick = loadImage("imageBrick.png");
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -101,7 +105,7 @@ function displayGrid(grid) {
         fill("white");
       }
       else if (grid[y][x] === 1) {
-        fill("black");
+        image(imageBrick, x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       else if (grid[y][x] === 9) {
         fill("red");
@@ -121,4 +125,6 @@ function create2dArray(COLS, ROWS) {
   }
   return emptyArray;
 }
+
+
 
