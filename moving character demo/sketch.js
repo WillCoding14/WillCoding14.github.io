@@ -1,6 +1,6 @@
-// Chess 2d Array
-// Will
-// October 27, 2022
+// Project Title
+// Your Name
+// Date
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
@@ -9,16 +9,22 @@
 const ROWS = 40;
 const COLS = 40;
 let grid;
-let cellWidth;
-let cellHeight;
-let playerX = ROWS/2;
-let playerY = COLS/2;
+let cellWidth, cellHeight;
+let playerX = 0;
+let playerY = 0;
+let stoneImg, grassImg, doggoImg;
+
+function preload(){
+  stoneImg = loadImage("stone.png");
+  grassImg = loadImage("grass.png");
+  doggoImg = loadImage("doggo.png");
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   cellWidth = width/COLS;
   cellHeight = height/ROWS;
-  grid = create2dArray(COLS, ROWS);
+  grid = createRandom2dArray(COLS, ROWS);
   //place player in grid
   grid[playerY][playerX] = 9;
 }
@@ -98,15 +104,15 @@ function displayGrid(grid) {
   for (let y=0; y<ROWS; y++) {
     for (let x=0; x<COLS; x++) {
       if (grid[y][x] === 0) {
-        fill("white");
+        image(grassImg, x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       else if (grid[y][x] === 1) {
-        fill("black");
+        image(stoneImg, x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       else if (grid[y][x] === 9) {
-        fill("red");
+        image(grassImg, x*cellWidth, y*cellHeight, cellWidth, cellHeight);
+        image(doggoImg, x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
-      rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
     }
   }
 }
@@ -122,3 +128,18 @@ function create2dArray(COLS, ROWS) {
   return emptyArray;
 }
 
+function createRandom2dArray(COLS, ROWS) {
+  let emptyArray = [];
+  for (let y=0; y<ROWS; y++) {
+    emptyArray.push([]);
+    for (let x=0; x<COLS; x++) {
+      if (random(100) < 50) {
+        emptyArray[y].push(0);
+      }
+      else {
+        emptyArray[y].push(1);
+      }
+    }
+  }
+  return emptyArray;
+}
