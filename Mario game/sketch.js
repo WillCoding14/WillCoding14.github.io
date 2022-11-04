@@ -90,14 +90,15 @@ function keyPressed() {
 }
 
 function mousePressed() {
-  let xPos = Math.floor(width/4 + mouseX/cellWidth);
-  let yPos = Math.floor(mouseY/cellHeight);
-
-  if (grid[yPos][xPos] === 0) {
-    grid[yPos][xPos] = 1;
-  }
-  else if (grid[yPos][xPos] === 1) {
-    grid[yPos][xPos] = 0;
+  if (mouseInBox(width/4, width / 4 * 3, 0, height)){
+    let xPos = Math.floor(mouseX/cellWidth - ROWS/2);
+    let yPos = Math.floor(mouseY/cellHeight);
+    if (grid[yPos][xPos] === 0) {
+      grid[yPos][xPos] = 1;
+    }
+    else if (grid[yPos][xPos] === 1) {
+      grid[yPos][xPos] = 0;
+    }
   }
 }
 
@@ -144,4 +145,8 @@ function createRandom2dArray(COLS, ROWS) {
     }
   }
   return emptyArray;
+}
+
+function mouseInBox(left, right, top, bottom) {
+  return mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom;
 }
