@@ -90,15 +90,13 @@ function keyPressed() {
 }
 
 function mousePressed() {
-  if (mouseInBox(width/4, width / 4 * 3, 0, height)){
-    let xPos = Math.floor(mouseX/cellWidth - ROWS/2);
-    let yPos = Math.floor(mouseY/cellHeight);
-    if (grid[yPos][xPos] === 0) {
-      grid[yPos][xPos] = 1;
-    }
-    else if (grid[yPos][xPos] === 1) {
-      grid[yPos][xPos] = 0;
-    }
+  let xPos = Math.floor(mouseX/cellWidth - ROWS/2);
+  let yPos = Math.floor(mouseY/cellHeight);
+  if (grid[yPos][xPos] === 0) {
+    grid[yPos][xPos] = 1;
+  }
+  else if (grid[yPos][xPos] === 1) {
+    grid[yPos][xPos] = 0;
   }
 }
 
