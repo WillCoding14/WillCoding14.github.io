@@ -13,12 +13,22 @@ let cellWidth;
 let cellHeight;
 let playerX = 0;
 let playerY = 0;
-let brickImg, skyImg, lizardImg;
+let brickImg, darkBrickImg, skyImg, spikeImg, coinImg;
+let lizUp, lizDown, lizLeft, lizRight;
+let lizStatus;
+
 
 function preload() {
   brickImg = loadImage("imageBrick.png");
   skyImg = loadImage("imageSky.png");
-  lizardImg = loadImage("imageSpike.png");
+  lizUp = loadImage("imageLizardUp.png");
+  lizDown = loadImage("imageLizardDown.png");
+  lizLeft = loadImage("imageLizardLeft.png");
+  lizRight = loadImage("imageLizardRight.png");
+  spikeImg = loadImage("imageSpike.png");
+  coinImg = loadImage("imageCoin.png");
+  darkBrickImg = loadImage("imageBrickDark.png");
+  lizStatus = lizUp;
 }
 
 function setup() {
@@ -26,7 +36,6 @@ function setup() {
   cellWidth = height/COLS;
   cellHeight = height/ROWS;
   grid = createRandom2dArray(COLS, ROWS);
-  //place player in grid
   grid[playerY][playerX] = 9;
 }
 
@@ -37,53 +46,37 @@ function draw() {
 
 function keyPressed() {
   if (keyCode === RIGHT_ARROW) {
+    lizStatus = lizRight;
     if (grid[playerY][playerX+1] === 0) {
-      //reset old location to white
       grid[playerY][playerX] = 0;
-      
-      //move
       playerX++;
-
-      //set new player location
       grid[playerY][playerX] = 9;
     }
   }
 
   if (keyCode === LEFT_ARROW) {
+    lizStatus = lizLeft;
     if (grid[playerY][playerX-1] === 0) {
-      //reset old location to white
       grid[playerY][playerX] = 0;
-      
-      //move
       playerX--;
-
-      //set new player location
       grid[playerY][playerX] = 9;
     }
   }
 
   if (keyCode === UP_ARROW) {
+    lizStatus = lizUp;
     if (grid[playerY-1][playerX] === 0) {
-      //reset old location to white
       grid[playerY][playerX] = 0;
-      
-      //move
       playerY--;
-
-      //set new player location
       grid[playerY][playerX] = 9;
     }
   }
 
   if (keyCode === DOWN_ARROW) {
+    lizStatus = lizDown;
     if (grid[playerY+1][playerX] === 0) {
-      //reset old location to white
       grid[playerY][playerX] = 0;
-      
-      //move
       playerY++;
-
-      //set new player location
       grid[playerY][playerX] = 9;
     }
   }
@@ -105,6 +98,7 @@ function displayGrid(grid) {
     for (let x=0; x<COLS; x++) {
       if (grid[y][x] === 0) {
         image(skyImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
+        image(darkBrickImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
       }
       else if (grid[y][x] === 1) {
         image(skyImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
@@ -112,7 +106,8 @@ function displayGrid(grid) {
       }
       else if (grid[y][x] === 9) {
         image(skyImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
-        image(lizardImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
+        image(darkBrickImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
+        image(lizStatus, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
       }
     }
   }
@@ -134,7 +129,7 @@ function createRandom2dArray(COLS, ROWS) {
   for (let y=0; y<ROWS; y++) {
     emptyArray.push([]);
     for (let x=0; x<COLS; x++) {
-      if (random(100) < 50) {
+      if (random(100) < 70) {
         emptyArray[y].push(0);
       }
       else {
