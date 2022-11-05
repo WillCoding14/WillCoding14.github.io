@@ -1,4 +1,4 @@
-// randomized grid
+// GOL
 // Will
 // October 26, 2022
 
