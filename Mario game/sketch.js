@@ -56,13 +56,22 @@ function keyPressed() {
       grid[playerY][playerX] = 9;
     }
     else if (grid[playerY][playerX+1] === 2){
-      
+      grid[playerY][playerX+2] = 2;
+      grid[playerY][playerX] = 0;
+      playerX++;
+      grid[playerY][playerX] = 9;
     }
   }
 
   if (keyCode === LEFT_ARROW) {
     lizStatus = lizLeft;
     if (grid[playerY][playerX-1] === 0){
+      grid[playerY][playerX] = 0;
+      playerX--;
+      grid[playerY][playerX] = 9;
+    }
+    else if (grid[playerY][playerX-1] === 2){
+      grid[playerY][playerX-2] = 2;
       grid[playerY][playerX] = 0;
       playerX--;
       grid[playerY][playerX] = 9;
@@ -76,11 +85,23 @@ function keyPressed() {
       playerY--;
       grid[playerY][playerX] = 9;
     }
+    else if (grid[playerY-1][playerX] === 2){
+      grid[playerY-2][playerX] = 2;
+      grid[playerY][playerX] = 0;
+      playerY--;
+      grid[playerY][playerX] = 9;
+    }
   }
 
   if (keyCode === DOWN_ARROW) {
     lizStatus = lizDown;
     if (grid[playerY+1][playerX] === 0){
+      grid[playerY][playerX] = 0;
+      playerY++;
+      grid[playerY][playerX] = 9;
+    }
+    else if (grid[playerY+1][playerX] === 2){
+      grid[playerY+2][playerX] = 2;
       grid[playerY][playerX] = 0;
       playerY++;
       grid[playerY][playerX] = 9;
@@ -92,6 +113,9 @@ function keyPressed() {
     if (lizStatus === lizDown){
       if (grid[playerY+1][playerX] === 0){
         grid[playerY+1][playerX] = 2;
+      }
+      else if (grid[playerY+1][playerX] === 2){
+        grid[playerY+1][playerX] = 0;
       }
     }
     if (lizStatus === lizUp){
