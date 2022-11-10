@@ -17,9 +17,11 @@ let brickImg, darkBrickImg, skyImg, spikeImg, coinImg;
 let lizUp, lizDown, lizLeft, lizRight;
 let bgImg;
 let lizStatus;
+let clangSound;
 
 
 function preload() {
+  //images
   brickImg = loadImage("imageBrick.png");
   skyImg = loadImage("imageSky.png");
   lizUp = loadImage("imageLizardUp.png");
@@ -30,7 +32,12 @@ function preload() {
   coinImg = loadImage("imageCoin.png");
   darkBrickImg = loadImage("imageBrickDark.png");
   bgImg = loadImage("imageBackground.png");
+
+  //Globals
   lizStatus = lizUp;
+  clangSound = loadSound("soundClang.mp3");
+
+
 }
 
 function setup() {
@@ -116,21 +123,34 @@ function keyPressed() {
       }
       else if (grid[playerY+1][playerX] === 2){
         grid[playerY+1][playerX] = 0;
+        clangSound.play();
       }
     }
     if (lizStatus === lizUp){
       if (grid[playerY-1][playerX] === 0){
         grid[playerY-1][playerX] = 2;
       }
+      else if (grid[playerY-1][playerX] === 2){
+        grid[playerY-1][playerX] = 0;
+        clangSound.play();
+      }
     }
     if (lizStatus === lizRight){
       if (grid[playerY][playerX + 1] === 0){
         grid[playerY][playerX + 1] = 2;
       }
+      else if (grid[playerY][playerX+1] === 2){
+        grid[playerY][playerX+1] = 0;
+        clangSound.play();
+      }
     }
     if (lizStatus === lizLeft){
       if (grid[playerY][playerX-1] === 0){
         grid[playerY][playerX-1] = 2;
+      }
+      else if (grid[playerY][playerX-1] === 2){
+        grid[playerY][playerX-1] = 0;
+        clangSound.play();
       }
     }
   }
