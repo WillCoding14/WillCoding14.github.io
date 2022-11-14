@@ -17,7 +17,8 @@ let brickImg, darkBrickImg, skyImg, spikeImg, coinImg;
 let lizUp, lizDown, lizLeft, lizRight;
 let bgImg;
 let lizStatus;
-let clangSound;
+let clangSound, coinSound;
+let coinCount;
 
 
 function preload() {
@@ -35,7 +36,10 @@ function preload() {
 
   //Globals
   lizStatus = lizUp;
+
+  //Sounds
   clangSound = loadSound("soundClang.mp3");
+  coinSound = loadSound("soundCoin.mp3");
 
 
 }
