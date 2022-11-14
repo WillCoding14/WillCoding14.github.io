@@ -80,6 +80,19 @@ function keyPressed() {
       grid[playerY][playerX] = 9;
     }
   }
+
+  if (keyCode === 32){ //Spacebar
+    if (lizStatus === lizDown){
+      for (let y = ROWS + grid[playerY][playerX]; y < ROWS; y++){
+        if (grid[y][playerX] === 0){
+          image(skyImg, grid[playerY][playerX]*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
+          image(darkBrickImg, grid[playerY][playerX]*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
+          image(spikeImg, grid[playerY][playerX]*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
+        }
+      }
+
+    }
+  }
 }
 
 function mousePressed() {
