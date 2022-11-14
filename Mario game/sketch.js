@@ -15,10 +15,14 @@ let playerX = 0;
 let playerY = 0;
 let brickImg, darkBrickImg, skyImg, spikeImg, coinImg;
 let lizUp, lizDown, lizLeft, lizRight;
+let bgImg;
 let lizStatus;
+let clangSound, coinSound;
+let coinCount;
 
 
 function preload() {
+  //images
   brickImg = loadImage("imageBrick.png");
   skyImg = loadImage("imageSky.png");
   lizUp = loadImage("imageLizardUp.png");
@@ -28,7 +32,16 @@ function preload() {
   spikeImg = loadImage("imageSpike.png");
   coinImg = loadImage("imageCoin.png");
   darkBrickImg = loadImage("imageBrickDark.png");
+  bgImg = loadImage("imageBackground.png");
+
+  //Globals
   lizStatus = lizUp;
+
+  //Sounds
+  clangSound = loadSound("soundClang.mp3");
+  coinSound = loadSound("soundCoin.mp3");
+
+
 }
 
 function setup() {
@@ -40,14 +53,21 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  image(bgImg, 0, 0, width, height);
   displayGrid(grid);
 }
 
 function keyPressed() {
+  //move
   if (keyCode === RIGHT_ARROW) {
     lizStatus = lizRight;
-    if (grid[playerY][playerX+1] === 0) {
+    if (grid[playerY][playerX+1] === 0){
+      grid[playerY][playerX] = 0;
+      playerX++;
+      grid[playerY][playerX] = 9;
+    }
+    else if (grid[playerY][playerX+1] === 2){
+      grid[playerY][playerX+2] = 2;
       grid[playerY][playerX] = 0;
       playerX++;
       grid[playerY][playerX] = 9;
@@ -56,7 +76,13 @@ function keyPressed() {
 
   if (keyCode === LEFT_ARROW) {
     lizStatus = lizLeft;
-    if (grid[playerY][playerX-1] === 0) {
+    if (grid[playerY][playerX-1] === 0){
+      grid[playerY][playerX] = 0;
+      playerX--;
+      grid[playerY][playerX] = 9;
+    }
+    else if (grid[playerY][playerX-1] === 2){
+      grid[playerY][playerX-2] = 2;
       grid[playerY][playerX] = 0;
       playerX--;
       grid[playerY][playerX] = 9;
@@ -65,7 +91,13 @@ function keyPressed() {
 
   if (keyCode === UP_ARROW) {
     lizStatus = lizUp;
-    if (grid[playerY-1][playerX] === 0) {
+    if (grid[playerY-1][playerX] === 0){
+      grid[playerY][playerX] = 0;
+      playerY--;
+      grid[playerY][playerX] = 9;
+    }
+    else if (grid[playerY-1][playerX] === 2){
+      grid[playerY-2][playerX] = 2;
       grid[playerY][playerX] = 0;
       playerY--;
       grid[playerY][playerX] = 9;
@@ -74,10 +106,56 @@ function keyPressed() {
 
   if (keyCode === DOWN_ARROW) {
     lizStatus = lizDown;
-    if (grid[playerY+1][playerX] === 0) {
+    if (grid[playerY+1][playerX] === 0){
       grid[playerY][playerX] = 0;
       playerY++;
       grid[playerY][playerX] = 9;
+    }
+    else if (grid[playerY+1][playerX] === 2){
+      grid[playerY+2][playerX] = 2;
+      grid[playerY][playerX] = 0;
+      playerY++;
+      grid[playerY][playerX] = 9;
+    }
+  }
+
+  //Shoot spike
+  if (keyCode === 32){ // spacebar
+    if (lizStatus === lizDown){
+      if (grid[playerY+1][playerX] === 0){
+        grid[playerY+1][playerX] = 2;
+      }
+      else if (grid[playerY+1][playerX] === 2){
+        grid[playerY+1][playerX] = 0;
+        clangSound.play();
+      }
+    }
+    if (lizStatus === lizUp){
+      if (grid[playerY-1][playerX] === 0){
+        grid[playerY-1][playerX] = 2;
+      }
+      else if (grid[playerY-1][playerX] === 2){
+        grid[playerY-1][playerX] = 0;
+        clangSound.play();
+      }
+    }
+    if (lizStatus === lizRight){
+      if (grid[playerY][playerX + 1] === 0){
+        grid[playerY][playerX + 1] = 2;
+      }
+      else if (grid[playerY][playerX+1] === 2){
+        grid[playerY][playerX+1] = 0;
+        clangSound.play();
+      }
+    }
+    if (lizStatus === lizLeft){
+      if (grid[playerY][playerX-1] === 0){
+        grid[playerY][playerX-1] = 2;
+      }
+      else if (grid[playerY][playerX-1] === 2){
+        grid[playerY][playerX-1] = 0;
+        clangSound.play();
+      }
     }
   }
 
@@ -110,17 +188,18 @@ function displayGrid(grid) {
   for (let y=0; y<ROWS; y++) {
     for (let x=0; x<COLS; x++) {
       if (grid[y][x] === 0) {
-        image(skyImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
         image(darkBrickImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
       }
       else if (grid[y][x] === 1) {
-        image(skyImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
         image(brickImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
       }
       else if (grid[y][x] === 9) {
-        image(skyImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
         image(darkBrickImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
         image(lizStatus, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
+      }
+      else if (grid[y][x] === 2){
+        image(darkBrickImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
+        image(spikeImg, x*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
       }
     }
   }
