@@ -99,11 +99,6 @@ function shootGun() {
   image(uzi3, mouseX, height - uLength + 50, uLength, uLength);
   image(hitmarker, mouseX - 25, mouseY -25, 50, 50);
 }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-
 
 function resetBg() {
   image(mainBg, 0, 0, width, height);

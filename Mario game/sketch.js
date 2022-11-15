@@ -45,8 +45,6 @@ function preload() {
   //Sounds
   clangSound = loadSound("soundClang.mp3");
   coinSound = loadSound("soundCoin.mp3");
-
-
 }
 
 function setup() {
@@ -58,12 +56,18 @@ function setup() {
 }
 
 function draw() {
+  noStroke();
+  //Title screen
   if (state === "start"){
     startScreen();
   }
+  //Main game
   if (state === "main"){
     image(bgImg, 0, 0, width, height);
     displayGrid(grid);
+  }
+  if (state === "win"){
+    startScreen();
   }
 }
 
@@ -81,6 +85,7 @@ function keyPressed() {
       grid[playerY][playerX] = 0;
       playerX++;
       grid[playerY][playerX] = 9;
+      clangSound.play();
     }
   }
 
@@ -96,6 +101,7 @@ function keyPressed() {
       grid[playerY][playerX] = 0;
       playerX--;
       grid[playerY][playerX] = 9;
+      clangSound.play();
     }
   }
 
@@ -111,6 +117,7 @@ function keyPressed() {
       grid[playerY][playerX] = 0;
       playerY--;
       grid[playerY][playerX] = 9;
+      clangSound.play();
     }
   }
 
@@ -126,6 +133,7 @@ function keyPressed() {
       grid[playerY][playerX] = 0;
       playerY++;
       grid[playerY][playerX] = 9;
+      clangSound.play();
     }
   }
 
@@ -134,62 +142,71 @@ function keyPressed() {
     if (lizStatus === lizDown){
       if (grid[playerY+1][playerX] === 0){
         grid[playerY+1][playerX] = 2;
+        clangSound.play();
       }
       else if (grid[playerY+1][playerX] === 2){
         grid[playerY+1][playerX] = 0;
         clangSound.play();
       }
+      else if (grid[playerY+1][playerX] === 1){
+        grid[playerY+1][playerX] = 0;
+        coinSound.play();
+      }
     }
     if (lizStatus === lizUp){
       if (grid[playerY-1][playerX] === 0){
         grid[playerY-1][playerX] = 2;
+        clangSound.play();
       }
       else if (grid[playerY-1][playerX] === 2){
         grid[playerY-1][playerX] = 0;
         clangSound.play();
       }
+      else if (grid[playerY-1][playerX] === 1){
+        grid[playerY-1][playerX] = 0;
+        coinSound.play();
+      }
     }
     if (lizStatus === lizRight){
       if (grid[playerY][playerX + 1] === 0){
         grid[playerY][playerX + 1] = 2;
+        clangSound.play();
       }
       else if (grid[playerY][playerX+1] === 2){
         grid[playerY][playerX+1] = 0;
         clangSound.play();
       }
+      else if (grid[playerY][playerX+1] === 1){
+        grid[playerY][playerX+1] = 0;
+        coinSound.play();
+      }
     }
     if (lizStatus === lizLeft){
       if (grid[playerY][playerX-1] === 0){
         grid[playerY][playerX-1] = 2;
+        clangSound.play();
       }
       else if (grid[playerY][playerX-1] === 2){
         grid[playerY][playerX-1] = 0;
         clangSound.play();
       }
-    }
-  }
-
-  if (keyCode === 32){ //Spacebar
-    if (lizStatus === lizDown){
-      for (let y = ROWS + grid[playerY][playerX]; y < ROWS; y++){
-        if (grid[y][playerX] === 0){
-          image(skyImg, grid[playerY][playerX]*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
-          image(darkBrickImg, grid[playerY][playerX]*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
-          image(spikeImg, grid[playerY][playerX]*cellWidth + width/4, y*cellHeight, cellWidth, cellHeight);
-        }
+      else if (grid[playerY][playerX-1] === 1){
+        grid[playerY][playerX-1] = 0;
+        coinSound.play();
       }
-
     }
   }
 }
 
 function mousePressed() {
+  //Start button logic
   if (state === "start" && mouseInBox(bX, bX + 300, bY, bY + 150)) {
     state = "main";
   }
 }
 
 function displayGrid(grid) {
+  //putting in images based on grid location
   for (let y=0; y<ROWS; y++) {
     for (let x=0; x<COLS; x++) {
       if (grid[y][x] === 0) {
@@ -210,18 +227,8 @@ function displayGrid(grid) {
   }
 }
 
-function create2dArray(COLS, ROWS) {
-  let emptyArray = [];
-  for (let y=0; y<ROWS; y++) {
-    emptyArray.push([]);
-    for (let x=0; x<COLS; x++) {
-      emptyArray[y].push(0);
-    }
-  }
-  return emptyArray;
-}
-
 function createRandom2dArray(COLS, ROWS) {
+  //more empty squares than brick squares but still random
   let emptyArray = [];
   for (let y=0; y<ROWS; y++) {
     emptyArray.push([]);
@@ -244,10 +251,11 @@ function mouseInBox(left, right, top, bottom) {
 function startScreen() {
   image(startBgImg, 0, 0, width, height);
   if (mouseInBox(bX, bX + 300, bY, bY + 150)) {
-    fill("red");
+    fill("white");
   }
   else {
     fill("black");
   }
   rect(bX, bY, bW, bH);
 }
+
