@@ -1,9 +1,6 @@
 // Chess 2d Array
 // Will
 // October 27, 2022
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
 
 
 const ROWS = 10;
@@ -19,6 +16,9 @@ let bgImg;
 let lizStatus;
 let clangSound, coinSound;
 let coinCount;
+let state = "start";
+let bX, bY, bW, bH;
+let startBgImg;
 
 
 function preload() {
@@ -33,9 +33,14 @@ function preload() {
   coinImg = loadImage("imageCoin.png");
   darkBrickImg = loadImage("imageBrickDark.png");
   bgImg = loadImage("imageBackground.png");
+  startBgImg = loadImage("imageBgStart.png");
 
   //Globals
   lizStatus = lizUp;
+  bX = width / 2 - 150;
+  bY = height / 2 - 75;
+  bW = 300;
+  bH = 150;
 
   //Sounds
   clangSound = loadSound("soundClang.mp3");
@@ -53,8 +58,13 @@ function setup() {
 }
 
 function draw() {
-  image(bgImg, 0, 0, width, height);
-  displayGrid(grid);
+  if (state === "start"){
+    startScreen();
+  }
+  if (state === "main"){
+    image(bgImg, 0, 0, width, height);
+    displayGrid(grid);
+  }
 }
 
 function keyPressed() {
@@ -174,13 +184,8 @@ function keyPressed() {
 }
 
 function mousePressed() {
-  let xPos = Math.floor(mouseX/cellWidth - ROWS/2);
-  let yPos = Math.floor(mouseY/cellHeight);
-  if (grid[yPos][xPos] === 0) {
-    grid[yPos][xPos] = 1;
-  }
-  else if (grid[yPos][xPos] === 1) {
-    grid[yPos][xPos] = 0;
+  if (state === "start" && mouseInBox(bX, bX + 300, bY, bY + 150)) {
+    state = "main";
   }
 }
 
@@ -234,4 +239,15 @@ function createRandom2dArray(COLS, ROWS) {
 
 function mouseInBox(left, right, top, bottom) {
   return mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom;
+}
+
+function startScreen() {
+  image(startBgImg, 0, 0, width, height);
+  if (mouseInBox(bX, bX + 300, bY, bY + 150)) {
+    fill("red");
+  }
+  else {
+    fill("black");
+  }
+  rect(bX, bY, bW, bH);
 }
