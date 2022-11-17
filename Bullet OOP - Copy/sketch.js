@@ -10,12 +10,13 @@ let shooterImg;
 let theBullets = [];
 
 class Bullet{
-  constructor(x, y){
-    this.x = x;
-    this.y = y;
+  constructor(){
+    this.x = 200;
+    this.y = 500;
     this.dx = 10;
-    this.w = 20;
-    this.height = 10;
+    this.w = 200;
+    this.h = 100;
+    this.Bullet = loadImage("imageBullet.png");
   }
 
   move(){
@@ -23,11 +24,11 @@ class Bullet{
   }
 
   display(){
-    image(bulletImg, this.x, this.y, this.w, this.height);
+    image(this.Bullet, this.x, this.y, this.w, this.h);
   }
 
   isDead(){
-    return this.x >= 10000;
+    return this.x >= width;
   }
 }
 
@@ -36,12 +37,12 @@ function setup() {
 }
 
 function preLoad(){
-  bulletImg = loadImage("imageBullet.png");
   shooterImg = loadImage("imageShooter.png");
 }
 
 function draw() {
   background(0);
+  image(shooterImg, 0, 0);
   for (let i = 0; i < theBullets.length; i++){
     theBullets[i].move();
     if (theBullets[i].isDead()){
@@ -55,6 +56,8 @@ function draw() {
 }
 
 function keyPressed(){
-  let someBullet = new Bullet(mouseX, mouseY);
-  theBullets.push(someBullet);
+  if (keyCode === 32){
+    let someBullet = new Bullet(mouseX, mouseY);
+    theBullets.push(someBullet);
+  }
 }
