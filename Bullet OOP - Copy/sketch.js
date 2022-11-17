@@ -42,7 +42,6 @@ function preLoad(){
 
 function draw() {
   background(0);
-  image(shooterImg, 0, 0);
   for (let i = 0; i < theBullets.length; i++){
     theBullets[i].move();
     if (theBullets[i].isDead()){
