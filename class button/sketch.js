@@ -25,6 +25,9 @@ class Button{
   }
 
   interact(){
+    if (mouseInBox){
+      this.color = "black";
+    }
 
   }
 }
@@ -41,6 +44,11 @@ function draw() {
   theButtons.push(p);
   for (let i = 0; i < theButtons.length; i++){
     theButtons[i].display();
+    theButtons[i].interact();
   }
   
+}
+
+function mouseInBox(left, right, top, bottom) {
+  return mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom;
 }
