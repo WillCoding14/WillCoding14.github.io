@@ -1,54 +1,54 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Button OOP
 
-let state = "start";
-let theButtons = [];
-
-class Button{
-  constructor(x, y, w, h) {
+class Button {
+  constructor(x, y, width, height) {
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
-    this.color = "green";
+    this.width = width;
+    this.height = height;
+    this.color = "black";
+    this.hoverColor = "gray";
   }
 
   display() {
-    rectMode(CENTER);
-    fill(this.color);
-    noStroke();
-    rect(this.x, this.y, this.w, this.h);
+    if (this.isInside(mouseX, mouseY)) {
+      fill(this.hoverColor);
+    }
+    else {
+      fill(this.color);
+    }
+    rect(this.x, this.y, this.width, this.height);
   }
 
-  interact(){
-    if (mouseInBox){
-      this.color = "black";
-    }
+  isInside(x, y) {
+    let leftSide = this.x;
+    let rightSide = this.x + this.width;
+    let topSide = this.y;
+    let bottomSide = this.y + this.height;
 
+    return x > leftSide && x < rightSide && y > topSide && y < bottomSide;
   }
 }
+
+let buttonOne = new Button(200, 300, 150, 75);
+let buttonTwo = new Button(200, 600, 150, 75);
+let backgroundColor = "lightgrey";
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
-  background(220);
-  let b = new Button(width/2, height*0.75, 200, 100);
-  let p = new Button(width/2, height*0.25, 200, 100);
-  theButtons.push(b);
-  theButtons.push(p);
-  for (let i = 0; i < theButtons.length; i++){
-    theButtons[i].display();
-    theButtons[i].interact();
-  }
-  
+  background(backgroundColor);
+  buttonOne.display();
+  buttonTwo.display();
 }
 
-function mouseInBox(left, right, top, bottom) {
-  return mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom;
+function mousePressed() {
+  if (buttonOne.isInside(mouseX, mouseY)) {
+    backgroundColor = "orange";
+  }
+  if (buttonTwo.isInside(mouseX, mouseY)) {
+    backgroundColor = "blue";
+  }
 }
